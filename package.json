@@ -1,0 +1,24 @@
+{
+  "name": "openai-tokens-dashboard",
+  "version": "1.0.0",
+  "description": "Monoerepo dashboard for OpenAI tokens usage",
+  "scripts": {
+    "start": "npx turbo dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "openai",
+    "tokens",
+    "dashboard"
+  ],
+  "author": "Equan P.",
+  "license": "MIT",
+  "workspaces": [
+    "blog/*",
+    "server/*",
+    "ui/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.3"
+  }
+}
