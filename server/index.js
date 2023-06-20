@@ -5,7 +5,7 @@ import { __dirname } from './libs/dirname.js';
 
 const app = express();
 const port = 3000;
-const publicPath = path.resolve(`${__dirname}`, "../ui/dist")
+const publicPath = path.resolve(`${__dirname}`, '../ui/dist');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
