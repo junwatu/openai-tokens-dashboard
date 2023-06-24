@@ -19,7 +19,8 @@
     "ui/*"
   ],
   "devDependencies": {
-    "turbo": "^1.10.3"
+    "turbo": "^1.10.3",
+    "vitest": "^0.32.2"
   },
   "engines": {
     "node": "18.16.0"
