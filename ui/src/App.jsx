@@ -21,26 +21,25 @@ function App() {
         fetch('http://localhost:2001/api')
             .then((response) => response.json())
             .then((data) => {
-                setUsageData(data.data.content.usage);
-                console.log(usageData);
+                setUsageData(data.data.usage);
+                console.log(data);
 
                 /**
                  * Default cost for GPT-3.5-Turbo 16K
                  */
 
                 // Determine the number of tokens in thousands
-                const promptTokensInK =
-                    data.data.content.usage.prompt_tokens / 1000;
+                const promptTokensInK = data.data.usage.prompt_tokens / 1000;
                 const completionTokensInK =
-                    data.data.content.usage.completion_tokens / 1000;
+                    data.data.usage.completion_tokens / 1000;
 
                 // Calculate the cost for each type of tokens
                 const promptTokensCost = promptTokensInK * 0.003;
                 const completionTokensCost = completionTokensInK * 0.004;
 
                 const totalTokensUsage =
-                    data.data.content.usage.prompt_tokens +
-                    data.data.content.usage.completion_tokens;
+                    data.data.usage.prompt_tokens +
+                    data.data.usage.completion_tokens;
 
                 setTotalTokens(totalTokensUsage);
                 setTotalCost(promptTokensCost + completionTokensCost);
@@ -62,11 +61,11 @@ function App() {
                                 <div className="h-60">
                                     <Title>Prompt</Title>
                                     <Grid className="gap-4">
-                                        <div class="flex h-auto py-5">
+                                        <div className="flex h-auto py-5">
                                             <textarea
                                                 placeholder="Describe yourself here..."
                                                 rows="4"
-                                                class="rounded-lg p-2 ring-1 ring-gray-200 focus:outline-gray-200 w-full"
+                                                className="rounded-lg p-2 ring-1 ring-gray-200 focus:outline-gray-200 w-full"
                                             ></textarea>
                                         </div>
 
