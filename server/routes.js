@@ -3,12 +3,24 @@ import { wordsCountFromPrompt } from './services/prompt.js';
 
 const router = Router();
 
-router.get('/api', async (req, res) => {
-	const response = await wordsCountFromPrompt({ promptData: null })
-	res.json({ message: 'Tokens usage API', data: response });
+router.post('/api', async (req, res) => {
+	console.log(req.body);
+	const { input } = req.body
+
+	if (input === "" || input === null) {
+		const response = await wordsCountFromPrompt({ promptData: null })
+		res.json({ message: 'Tokens usage API', data: response });
+
+	} else {
+		const response = await wordsCountFromPrompt({ promptData: input })
+		res.json({ message: 'Tokens usage API', data: response });
+
+	}
+
+
 });
 
-router.post('/api', (req, res) => {
+router.get('/api', (req, res) => {
 	console.log(req.body);
 	res.json({
 		message: 'POST route response',
