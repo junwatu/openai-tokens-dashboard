@@ -40,3 +40,33 @@ The document is designed to:
 5. Highlight the testing, deployment for the developed dashboard.
 
 By the end of the document, readers should have a comprehensive understanding of the problem at hand, the proposed solution, and the process of implementing the solution. It will equip them with the knowledge required to create and deploy an OpenAI API Tokens Usage Dashboard, ultimately leading to more efficient and cost-effective use of the OpenAI API.
+
+## The Core Problem: Tokens Usage Cost
+
+### Understanding OpenAI API Tokens
+
+OpenAI's API uses tokens as the basic unit of work when processing requests. Essentially, tokens are chunks of text that the API reads and processes. They are not strictly equivalent to words, characters, or bytes but can be thought of as a measure of computational work.
+
+The tokenization process, which breaks text into tokens, follows a specific algorithm used by the model. For example, in English, a token can be as short as one character or as long as one word, such as "a" or "apple". However, it's important to note that not all words are a single token. For instance, the word "chatbot" is a single token, but a word like "ChatGPT" might be broken into multiple tokens ("Chat", "##G", "##PT") based on how the model was trained to tokenize text.
+
+The number of tokens in an API call significantly affects both the cost of the call and whether the call works at all. OpenAI charges per token, and the models have a maximum limit of tokens they can handle in a single call. For instance, as of September 2021, the gpt-3.5-turbo model has a maximum limit of 4096 tokens per call.
+
+Understanding how to count tokens is crucial for controlling costs and ensuring your API calls work as intended. To manage costs and make efficient use of the OpenAI API, it is essential to understand how tokens work, how they affect the API calls, and how to count them accurately.
+
+### The Cost Implications of Tokens Usage
+
+The cost of using the OpenAI API is directly linked to the number of tokens processed during API calls. This pricing model holds true regardless of the type of API request being made, whether it's generating text, translating text, or performing any other task.
+
+Each API call consumes a certain number of tokens, which include not only the tokens in the message you're asking the model to generate but also those in the prompt you provide, and those reserved for special instructions and formatting. Therefore, the total number of tokens used in an API call is a sum of tokens in the input prompt, the message generated, and special instructions.
+
+## The Need for Monitoring and Managing Token Usage
+
+Given the direct correlation between token usage and cost, as well as the impact on API call success, it's clear that monitoring and managing token usage is crucial when using OpenAI's API. There are several reasons why this is important:
+
+1. **Budget Control**: By monitoring token usage, users can gain insights into how their usage patterns align with their budget. If token usage is high, users might need to adjust their utilization of the API to avoid overspending.
+
+2. **Avoiding Failed API Calls**: Keeping track of token usage helps ensure that the total tokens in an API call do not exceed the model's maximum limit, thus preventing failed calls due to token overload. This is particularly important in applications where the reliability of the service is paramount.
+
+3. **Optimizing API Usage**: Monitoring tokens can provide valuable insights into how efficiently the API is being used. For instance, if a large number of tokens are being used for control instructions or formatting, users might be able to refine their usage to reduce the token count without sacrificing the functionality of their application.
+
+While it's clear that monitoring and managing token usage is essential, it can be challenging to do this effectively without the right tools and methodologies. That's where the concept of a Tokens Usage Dashboard comes into play. In the next section, we will explore the role and benefits of such a dashboard.
