@@ -16,13 +16,20 @@ function App() {
     const [usageData, setUsageData] = useState(null);
     const [totalCost, setTotalCost] = useState(0);
     const [totalTokens, setTotalTokens] = useState(0);
+    const [totalWords, setTotalWords] = useState({ words: 0 });
+    const [inputText, setInputText] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:2001/api')
+        fetch('http://localhost:2001/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ input: null }),
+        })
             .then((response) => response.json())
             .then((data) => {
                 setUsageData(data.data.usage);
-                console.log(data);
 
                 /**
                  * Default cost for GPT-3.5-Turbo 16K
@@ -43,9 +50,37 @@ function App() {
 
                 setTotalTokens(totalTokensUsage);
                 setTotalCost(promptTokensCost + completionTokensCost);
+
+                const wordsCount = data.data.choices[0].message.content;
+                try {
+                    setTotalWords(JSON.parse(wordsCount));
+                } catch (error) {
+                    console.log(error);
+                }
             })
             .catch((error) => console.error(error));
     }, []);
+
+    const handleExamineClick = () => {
+        // Here you can access the input text in the `inputText` state variable
+        console.log(inputText);
+        // You can perform further actions with the input text, such as sending it to the server or processing it.
+        fetch('http://localhost:2001/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ input: inputText }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the API response here
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     return (
         <div>
@@ -59,18 +94,26 @@ function App() {
                         <Col numColSpanLg={4}>
                             <Card className="h-full">
                                 <div className="h-60">
-                                    <Title>Prompt</Title>
+                                    <Title>Type</Title>
                                     <Grid className="gap-4">
                                         <div className="flex h-auto py-5">
                                             <textarea
-                                                placeholder="Describe yourself here..."
+                                                placeholder="I will count your secret..."
                                                 rows="4"
                                                 className="rounded-lg p-2 ring-1 ring-gray-200 focus:outline-gray-200 w-full"
+                                                value={inputText}
+                                                onChange={(e) =>
+                                                    setInputText(e.target.value)
+                                                }
                                             ></textarea>
                                         </div>
 
                                         <Flex>
-                                            <Button>Examine</Button>
+                                            <Button
+                                                onClick={handleExamineClick}
+                                            >
+                                                Examine
+                                            </Button>
                                         </Flex>
                                     </Grid>
                                 </div>
@@ -114,7 +157,14 @@ function App() {
                                     </div>
                                 </Card>
                                 <Card>
-                                    <div className="h-24" />
+                                    <div className="h-24">
+                                        <Title>Words Count</Title>
+                                        {totalWords ? (
+                                            <Metric>{totalWords.words}</Metric>
+                                        ) : (
+                                            <Metric>0</Metric>
+                                        )}
+                                    </div>
                                 </Card>
                             </div>
                         </Col>
