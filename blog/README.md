@@ -41,6 +41,27 @@ The document is designed to:
 
 By the end of the document, readers should have a comprehensive understanding of the problem at hand, the proposed solution, and the process of implementing the solution. It will equip them with the knowledge required to create and deploy an OpenAI API Tokens Usage Dashboard, ultimately leading to more efficient and cost-effective use of the OpenAI API.
 
+## Deep Dive into OpenAI API
+
+To effectively integrate and utilize the OpenAI API within our Tokens Usage Dashboard, it is essential to gain an understanding of the API's features, functionality, and available endpoints. This will enable us to retrieve token usage data, calculate costs, and provide real-time updates to the dashboard.
+
+Here is a closer look at the key aspects of the OpenAI API:
+
+1. **API Documentation**: Begin by thoroughly reviewing the [official documentation](https://platform.openai.com/docs/api-reference) provided by OpenAI for the API. We will use chat completion for this project. The [Chat API](https://platform.openai.com/docs/api-reference/completions/create) documentation will outline the available endpoints, request/response formats, and any specific guidelines or limitations.
+
+2. **Authentication**: OpenAI API utilizes authentication using an API key or access token. The documentation will provide guidance on how to obtain and securely store the API key. It's important to handle the key securely and ensure it is not exposed in client-side code.
+
+3. **Rate Limiting**: OpenAI API enforces [rate limits](https://platform.openai.com/docs/guides/rate-limits/overview) to control the number of requests made within a specified timeframe. Understanding the rate limits imposed by the API is crucial for designing our dashboard's data retrieval strategy and ensuring compliance with the API's usage policies.
+
+4. **Cost**: OpenAI has different [pricing](https://openai.com/pricing) structures for each of the models they have released. For our project, we utilize the `gpt-3.5-turbo` or `gpt-3.5-turbo-16k` models. The cost table for these models is as follows:
+
+    | Model       | Input               | Output             |
+    | ----------- | ------------------- | ------------------ |
+    | 4K context  | $0.0015 / 1K tokens | $0.002 / 1K tokens |
+    | 16K context | $0.003 / 1K tokens  | $0.004 / 1K tokens |
+
+By diving deep into the OpenAI API, we can gain a comprehensive understanding of its capabilities and design our Tokens Usage Dashboard accordingly.
+
 ## The Core Problem: Tokens Usage Cost
 
 ### Understanding OpenAI API Tokens
@@ -71,7 +92,7 @@ Given the direct correlation between token usage and cost, as well as the impact
 
 While it's clear that monitoring and managing token usage is essential, it can be challenging to do this effectively without the right tools and methodologies. That's where the concept of a Tokens Usage Dashboard comes into play. In the next section, we will explore the role and benefits of such a dashboard.
 
-## The Proposed Solution: A Tokens Usage Dashboard
+## Tokens Usage Dashboard
 
 ### Role and Benefits of a Tokens Usage Dashboard
 
