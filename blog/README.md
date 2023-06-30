@@ -59,7 +59,7 @@ The cost of using the OpenAI API is directly linked to the number of tokens proc
 
 Each API call consumes a certain number of tokens, which include not only the tokens in the message you're asking the model to generate but also those in the prompt you provide, and those reserved for special instructions and formatting. Therefore, the total number of tokens used in an API call is a sum of tokens in the input prompt, the message generated, and special instructions.
 
-## The Need for Monitoring and Managing Token Usage
+### The Need for Monitoring and Managing Token Usage
 
 Given the direct correlation between token usage and cost, as well as the impact on API call success, it's clear that monitoring and managing token usage is crucial when using OpenAI's API. There are several reasons why this is important:
 
@@ -70,3 +70,19 @@ Given the direct correlation between token usage and cost, as well as the impact
 3. **Optimizing API Usage**: Monitoring tokens can provide valuable insights into how efficiently the API is being used. For instance, if a large number of tokens are being used for control instructions or formatting, users might be able to refine their usage to reduce the token count without sacrificing the functionality of their application.
 
 While it's clear that monitoring and managing token usage is essential, it can be challenging to do this effectively without the right tools and methodologies. That's where the concept of a Tokens Usage Dashboard comes into play. In the next section, we will explore the role and benefits of such a dashboard.
+
+## The Proposed Solution: A Tokens Usage Dashboard
+
+### Role and Benefits of a Tokens Usage Dashboard
+
+A Tokens Usage Dashboard is a tool that allows users to monitor and manage the token usage of their OpenAI API calls. Such a dashboard plays a significant role in providing insights into token usage and supporting decision-making processes related to OpenAI API use. Here are some key benefits of implementing a Tokens Usage Dashboard:
+
+1. Real-Time Monitoring: A Tokens Usage Dashboard can provide real-time updates on token usage. This allows users to keep a constant eye on their token consumption and react promptly to any unusual spikes or patterns that may occur.
+
+2. Historical Data Analysis: The dashboard can store historical data on token usage, enabling users to perform trend analysis and identify patterns over time. This can be particularly useful for forecasting future token usage and planning budget accordingly.
+
+3. Error Prevention: By monitoring the number of tokens used in each API call, the dashboard can help prevent errors due to exceeding the model's token limit. This can significantly enhance the reliability and performance of applications using the OpenAI API.
+
+4. Ease of Use: A well-designed dashboard provides an easy-to-understand visual representation of token usage. This makes it accessible to both technical and non-technical users, promoting broader understanding and more effective decision-making.
+
+In the next section, we will delve into why GridDB, Node.js, and React are chosen as the technologies to build this dashboard, and how they contribute to achieving these benefits.
