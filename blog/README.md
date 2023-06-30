@@ -140,7 +140,7 @@ Key advantages include:
 -   **Efficiency**: React creates an in-memory data structure cache, computes the resulting differences, and then updates the browser's displayed DOM efficiently. This results in a fast and responsive user interface.
 -   **Popularity and Support**: React is widely used and has a strong community, making it a safe and reliable choice for building the front-end of the Tokens Usage Dashboard.
 
-In combination, GridDB, Node.js, and React provide a powerful, efficient, and reliable stack for building our Tokens Usage Dashboard. The next section will dive deeper into each of these technologies and their role in the dashboard.
+In combination, GridDB, Node.js, and React provide a powerful, efficient, and reliable stack for building our Tokens Usage Dashboard.
 
 ## Designing the Dashboard
 
