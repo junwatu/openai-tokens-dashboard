@@ -86,3 +86,63 @@ A Tokens Usage Dashboard is a tool that allows users to monitor and manage the t
 4. Ease of Use: A well-designed dashboard provides an easy-to-understand visual representation of token usage. This makes it accessible to both technical and non-technical users, promoting broader understanding and more effective decision-making.
 
 In the next section, we will delve into why GridDB, Node.js, and React are chosen as the technologies to build this dashboard, and how they contribute to achieving these benefits.
+
+## Technology Selection: Why GridDB, Node.js, and React\*\*
+
+The choice of technology is crucial in building an efficient and user-friendly Tokens Usage Dashboard. For this project, we have chosen GridDB, Node.js, and React as our primary technologies. Here's why:
+
+### GridDB
+
+GridDB is a highly scalable, in-memory NoSQL time series database optimized for IoT and Big Data. It's well-suited for storing and retrieving large amounts of structured data, making it a perfect fit for managing and tracking token usage data over time. Key advantages include:
+
+-   **Scalability**: GridDB provides excellent scalability, making it capable of handling a large volume of data with ease. This is crucial for monitoring token usage in real-time and storing historical data for trend analysis.
+-   **Speed**: As an in-memory database, GridDB offers fast data processing capabilities. This ensures timely updates and quick responses, which are essential for real-time monitoring and immediate decision-making.
+-   **Reliability**: GridDB's robust architecture ensures high availability and data consistency, providing a reliable foundation for the Tokens Usage Dashboard.
+
+### Node.js
+
+Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It's designed to build scalable network applications, making it a great choice for implementing the backend of our Tokens Usage Dashboard. The reasons for choosing Node.js include:
+
+-   **Performance**: Node.js uses an event-driven, non-blocking I/O model, which makes it lightweight and efficient. This is ideal for data-intensive real-time applications that run across distributed devices, such as our Tokens Usage Dashboard.
+-   **Community Support**: Node.js has a large and active community, which means a wealth of libraries and frameworks are available to speed up development and solve common problems.
+-   **Integration**: Node.js can integrate seamlessly with GridDB and React, providing a unified JavaScript development environment across the stack.
+
+### React
+
+React is a JavaScript library for building user interfaces, particularly single-page applications. It's maintained by Facebook and a community of individual developers and companies. The reasons for choosing React include:
+
+-   **Component-Based**: React allows developers to build encapsulated components that manage their own state, then compose them to make complex UIs. This is perfect for building a dashboard with various interactive elements.
+-   **Efficiency**: React creates an in-memory data structure cache, computes the resulting differences, and then updates the browser's displayed DOM efficiently. This results in a fast and responsive user interface.
+-   **Popularity and Support**: React is widely used and has a strong community, making it a safe and reliable choice for building the front-end of the Tokens Usage Dashboard.
+
+In combination, GridDB, Node.js, and React provide a powerful, efficient, and reliable stack for building our Tokens Usage Dashboard. The next section will dive deeper into each of these technologies and their role in the dashboard.
+
+## Designing the Dashboard
+
+### Structuring Our Solution
+
+![OpenAI Dashboard](images/openai-tokens-usage-2023-06-27-0509.svg)
+
+To effectively implement the OpenAI API Tokens Usage Dashboard, we need to establish a solid architectural design that ensures scalability, maintainability, and extensibility. Here is an overview of the proposed architectural design for the solution:
+
+1. **Client-Server Architecture**: The solution will follow a client-server architecture, where the client-side will be responsible for rendering the user interface and interacting with the user, while the server-side will handle data processing, storage, and communication with external APIs.
+
+2. **Front-End (Client-Side)**:
+
+    - **React**: The front-end will be developed using the React JavaScript library. React's component-based approach and virtual DOM will enable efficient rendering and ensure a responsive user interface.
+    - **User Interface Components**: We will design and develop reusable UI components that will be used to create the dashboard interface. These components will handle user interactions, data visualization, and data filtering/search functionalities.
+
+3. **Back-End (Server-Side)**:
+
+    - **Node.js**: The back-end will be built using Node.js, a popular server-side JavaScript runtime. Node.js provides an event-driven, non-blocking I/O model, making it suitable for handling concurrent requests and real-time updates.
+    - **Express.js**: We will use Express.js, a web application framework for Node.js, to simplify the development of RESTful APIs and handle routing, middleware, and request/response handling.
+    - **GridDB**: GridDB, a high-performance in-memory database, will be utilized for data management and storage. GridDB's distributed architecture and scalability features make it well-suited for handling large volumes of token usage data.
+    - **OpenAI API Integration**: The server-side code will integrate with the OpenAI API to retrieve token usage data and calculate the associated costs. This integration will involve making API requests, handling authentication, and parsing the response data.
+
+4. **Data Flow**:
+    - The client-side will communicate with the server-side through RESTful API endpoints exposed by the Node.js backend.
+    - The server-side will interact with GridDB to store and retrieve token usage data efficiently.
+    - The server-side will also interact with the OpenAI API to retrieve real-time token usage information and perform cost calculations.
+    - The processed data will be sent back to the client-side as JSON responses, which will be used to update the dashboard's user interface.
+
+By following this architectural design, we can create a well-structured and scalable solution for the OpenAI API Tokens Usage Dashboard. It ensures a clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
