@@ -173,3 +173,18 @@ Here is an overview of the proposed architectural design for the solution:
     - The processed data will be sent back to the client-side as JSON responses, which will be used to update the dashboard's user interface.
 
 A clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
+
+### Creating an Intuitive UI
+
+To ensure an intuitive and user-friendly interface for the OpenAI API Tokens Usage Dashboard, we will leverage the power of React. By implementing the following principles, we can create a responsive and dynamic UI that provides an efficient and pleasant user experience:
+
+1. **Responsive Design**: Implement a responsive layout that adapts to different screen sizes and devices. Ensure that the dashboard remains visually appealing and usable on various platforms, including desktop, tablets, and mobile devices.
+
+2. **Real-time Updates**: Use React's state management to update the dashboard in real time, updated token usage data from the server and reflect the changes dynamically on the UI.
+
+The user interface of the web application consists of two main parts:
+
+-   **Prompt Input**: This section is where you can input the prompt for the OpenAI API.
+-   **Dashboard**: This section displays the token usage and provides an estimate of the associated cost.
+
+![Dashboard-UI](images/openai-dashboard-ui.png)
