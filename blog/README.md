@@ -87,13 +87,15 @@ A Tokens Usage Dashboard is a tool that allows users to monitor and manage the t
 
 In the next section, we will delve into why GridDB, Node.js, and React are chosen as the technologies to build this dashboard, and how they contribute to achieving these benefits.
 
-## Technology Selection: Why GridDB, Node.js, and React\*\*
+## Why GridDB, Node.js, and React
 
-The choice of technology is crucial in building an efficient and user-friendly Tokens Usage Dashboard. For this project, we have chosen GridDB, Node.js, and React as our primary technologies. Here's why:
+The choice of technology is crucial in building an efficient and user-friendly Tokens Usage Dashboard. For this project, we have chosen **GridDB**, **Node.js**, and **React** as our primary technologies. Here's why:
 
 ### GridDB
 
-GridDB is a highly scalable, in-memory NoSQL time series database optimized for IoT and Big Data. It's well-suited for storing and retrieving large amounts of structured data, making it a perfect fit for managing and tracking token usage data over time. Key advantages include:
+[GridDB](https://griddb.net) is a highly scalable, in-memory NoSQL time series database optimized for IoT and Big Data. It's well-suited for storing and retrieving large amounts of structured data, making it a perfect fit for managing and tracking token usage data over time.
+
+Key advantages include:
 
 -   **Scalability**: GridDB provides excellent scalability, making it capable of handling a large volume of data with ease. This is crucial for monitoring token usage in real-time and storing historical data for trend analysis.
 -   **Speed**: As an in-memory database, GridDB offers fast data processing capabilities. This ensures timely updates and quick responses, which are essential for real-time monitoring and immediate decision-making.
@@ -101,15 +103,17 @@ GridDB is a highly scalable, in-memory NoSQL time series database optimized for 
 
 ### Node.js
 
-Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It's designed to build scalable network applications, making it a great choice for implementing the backend of our Tokens Usage Dashboard. The reasons for choosing Node.js include:
+[Node.js](https://nodejs.org) is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It's designed to build scalable network applications, making it a great choice for implementing the backend of our Tokens Usage Dashboard. The reasons for choosing Node.js include:
 
 -   **Performance**: Node.js uses an event-driven, non-blocking I/O model, which makes it lightweight and efficient. This is ideal for data-intensive real-time applications that run across distributed devices, such as our Tokens Usage Dashboard.
 -   **Community Support**: Node.js has a large and active community, which means a wealth of libraries and frameworks are available to speed up development and solve common problems.
 -   **Integration**: Node.js can integrate seamlessly with GridDB and React, providing a unified JavaScript development environment across the stack.
 
+-   **Cost**: The greatness of Node.js is, we can use JavaScript as the main language to develop a fully functional web application, from back-end to the client-side.
+
 ### React
 
-React is a JavaScript library for building user interfaces, particularly single-page applications. It's maintained by Facebook and a community of individual developers and companies. The reasons for choosing React include:
+[React](https://react.dev/) is a JavaScript library for building user interfaces, particularly single-page applications. It's maintained by Facebook and a community of individual developers and companies. The reasons for choosing React include:
 
 -   **Component-Based**: React allows developers to build encapsulated components that manage their own state, then compose them to make complex UIs. This is perfect for building a dashboard with various interactive elements.
 -   **Efficiency**: React creates an in-memory data structure cache, computes the resulting differences, and then updates the browser's displayed DOM efficiently. This results in a fast and responsive user interface.
@@ -121,9 +125,11 @@ In combination, GridDB, Node.js, and React provide a powerful, efficient, and re
 
 ### Structuring Our Solution
 
+To effectively implement the OpenAI API Tokens Usage Dashboard, we need to establish a solid architectural design that ensures scalability, maintainability, and extensibility.
+
 ![OpenAI Dashboard](images/openai-tokens-usage-2023-06-27-0509.svg)
 
-To effectively implement the OpenAI API Tokens Usage Dashboard, we need to establish a solid architectural design that ensures scalability, maintainability, and extensibility. Here is an overview of the proposed architectural design for the solution:
+Here is an overview of the proposed architectural design for the solution:
 
 1. **Client-Server Architecture**: The solution will follow a client-server architecture, where the client-side will be responsible for rendering the user interface and interacting with the user, while the server-side will handle data processing, storage, and communication with external APIs.
 
@@ -145,4 +151,4 @@ To effectively implement the OpenAI API Tokens Usage Dashboard, we need to estab
     - The server-side will also interact with the OpenAI API to retrieve real-time token usage information and perform cost calculations.
     - The processed data will be sent back to the client-side as JSON responses, which will be used to update the dashboard's user interface.
 
-By following this architectural design, we can create a well-structured and scalable solution for the OpenAI API Tokens Usage Dashboard. It ensures a clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
+A clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
