@@ -17,16 +17,20 @@ async function wordsCountFromPrompt({ promptData }) {
 	
 	----
 	Answer with JSON format {words: count_here}`;
+	try {
+		const completion = await openai.createChatCompletion({
+			model: 'gpt-3.5-turbo',
+			messages: [
+				{ role: 'system', content: 'You are a helpful assistant.' },
+				{ role: 'user', content: prompt },
+			],
+			max_tokens: 4000,
+		});
+		return completion.data;
+	} catch (error) {
+		return error.messages
+	}
 
-	const completion = await openai.createChatCompletion({
-		model: 'gpt-3.5-turbo-16k',
-		messages: [
-			{ role: 'system', content: 'You are a helpful assistant.' },
-			{ role: 'user', content: prompt },
-		],
-		max_tokens: 4000,
-	});
-	return completion.data;
 }
 
 export { wordsCountFromPrompt };
