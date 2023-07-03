@@ -1,6 +1,6 @@
 const griddb = require('griddb-node-api');
 
-const containerName = 'AIContentGenerator';
+const containerName = 'OpenAITokenUsage';
 
 const initStore = async () => {
 	const factory = griddb.StoreFactory.getInstance();
@@ -26,9 +26,9 @@ function initContainer() {
 		name: containerName,
 		columnInfoList: [
 			['id', griddb.Type.INTEGER],
-			['title', griddb.Type.STRING],
-			['content', griddb.Type.STRING],
-			['imageUrl', griddb.Type.STRING],
+			['prompt', griddb.Type.STRING],
+			['cost', griddb.Type.STRING],
+			['details', griddb.Type.STRING],
 		],
 		type: griddb.ContainerType.COLLECTION,
 		rowKey: true,

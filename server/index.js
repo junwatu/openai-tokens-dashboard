@@ -10,9 +10,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 const publicPath = path.resolve(`${__dirname}`, '../ui/dist');
 
-app.use(cors({
-	origin: 'http://localhost:5173'
-}));
+app.use(
+	cors({
+		origin: 'http://localhost:5173',
+	})
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
