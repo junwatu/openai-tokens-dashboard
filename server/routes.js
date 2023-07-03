@@ -19,7 +19,6 @@ async function saveData({ prompt, cost, details }) {
 }
 
 router.post('/api', async (req, res) => {
-	console.log(req.body);
 	const { input } = req.body;
 
 	if (input === '' || input === null) {
@@ -44,8 +43,8 @@ router.post('/api', async (req, res) => {
 		}
 		res.json({ message: 'No tokens usage', data: response });
 	} else {
-		// TODO: save data
 		const response = await wordsCountFromPrompt({ promptData: input });
+		//saveData()
 		res.json({ message: 'Data tokens usage ', data: response });
 	}
 });
