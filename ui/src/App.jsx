@@ -44,14 +44,11 @@ function App() {
                 const promptTokensCost = promptTokensInK * 0.003;
                 const completionTokensCost = completionTokensInK * 0.004;
 
-                const totalTokensUsage =
-                    data.data.usage.prompt_tokens +
-                    data.data.usage.completion_tokens;
-
-                setTotalTokens(totalTokensUsage);
+                setTotalTokens(data.data.usage.total_tokens);
                 setTotalCost(promptTokensCost + completionTokensCost);
 
                 const wordsCount = data.data.choices[0].message.content;
+
                 try {
                     setTotalWords(JSON.parse(wordsCount));
                 } catch (error) {
@@ -62,9 +59,6 @@ function App() {
     }, []);
 
     const handleExamineClick = () => {
-        // Here you can access the input text in the `inputText` state variable
-        console.log(inputText);
-        // You can perform further actions with the input text, such as sending it to the server or processing it.
         fetch('http://localhost:2001/api', {
             method: 'POST',
             headers: {
@@ -74,8 +68,25 @@ function App() {
         })
             .then((response) => response.json())
             .then((data) => {
-                // Handle the API response here
                 console.log(data);
+                setUsageData(data.data.usage);
+                // Update totalTokens
+                const promptTokensInK = data.data.usage.prompt_tokens / 1000;
+                const completionTokensInK =
+                    data.data.usage.completion_tokens / 1000;
+                const promptTokensCost = promptTokensInK * 0.003;
+                const completionTokensCost = completionTokensInK * 0.004;
+                setTotalTokens(data.data.usage.total_tokens);
+                setTotalCost(promptTokensCost + completionTokensCost);
+
+                // Update totalWords
+                const wordsCount = data.data.choices[0].message.content;
+                console.log(`Words: ${wordsCount}`);
+                try {
+                    setTotalWords(JSON.parse(wordsCount));
+                } catch (error) {
+                    console.log(error);
+                }
             })
             .catch((error) => {
                 console.error(error);
