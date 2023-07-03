@@ -16,7 +16,7 @@ async function wordsCountFromPrompt({ promptData }) {
 	${promptData}
 	
 	----
-	Answer with JSON format {words: count_here}`;
+	Answer with JSON format {words: count_here} ONLY`;
 	try {
 		const completion = await openai.createChatCompletion({
 			model: 'gpt-3.5-turbo',
@@ -24,7 +24,7 @@ async function wordsCountFromPrompt({ promptData }) {
 				{ role: 'system', content: 'You are a helpful assistant.' },
 				{ role: 'user', content: prompt },
 			],
-			max_tokens: 4000,
+			max_tokens: 1000,
 		});
 		return completion.data;
 	} catch (error) {
