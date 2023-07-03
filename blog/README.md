@@ -188,3 +188,26 @@ The user interface of the web application consists of two main parts:
 -   **Dashboard**: This section displays the token usage and provides an estimate of the associated cost.
 
 ![Dashboard-UI](images/openai-dashboard-ui.png)
+
+## Implementing the Backend with GridDB and Node.js
+
+-   6.1 Setting up GridDB: Data Management for Our Dashboard
+-   6.2 Integrating GridDB with Node.js: Building the Backend
+
+## Managing Tokens with the OpenAI API
+
+-   7.1 Integrating OpenAI API with Node.js
+-   7.2 Implementing Tokens Usage and Cost Tracking
+
+## Building the Dashboard UI with React
+
+-   8.1 Establishing the React Framework
+-   8.2 Constructing Components for the Dashboard
+-   8.3 Integrating the Backend with the Dashboard
+
+## Conclusion
+
+-   11.1 Reflecting on the Solution
+-   11.2 Potential for Future Enhancements
+
+## References
