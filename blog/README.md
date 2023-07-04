@@ -4,7 +4,7 @@
 
 Organizations rely on advanced APIs like OpenAI API to enhance their applications. These APIs enable interaction with AI and machine learning models. However, managing API tokens, which determine the cost of API calls, can be challenging. Over-usage leads to high costs, while under-usage wastes resources.
 
-To address this challenge, a real-time token usage dashboard is proposed. It leverages GridDB for data management, Node.js for backend development, and React for the front-end UI. This document aims to provide a guide for understanding the problem, conceptualizing the solution, and implementing it effectively with the chosen technologies.
+To address this challenge, a token usage dashboard is proposed. It leverages GridDB for data management, Node.js for backend development, and React for the front-end UI. This document aims to provide a guide for understanding the problem, conceptualizing the solution, and implementing it effectively with the chosen technologies.
 
 ## Purpose of this Blog
 
