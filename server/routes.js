@@ -72,12 +72,10 @@ router.post('/api', async (req, res) => {
 	}
 });
 
-router.get('/api', (req, res) => {
-	console.log(req.body);
-	res.json({
-		message: 'POST route response',
-		received: req.body,
-	});
-});
+router.get("/api", async (req, res) => {
+	const data = await GridDB.queryAll(conInfo, store)
+	console.log(data)
+	res.json({ data })
+})
 
 export default router;
