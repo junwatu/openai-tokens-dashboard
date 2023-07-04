@@ -2,65 +2,34 @@
 
 ## Introduction
 
-In the contemporary technological landscape, organizations often rely on sophisticated APIs, such as the OpenAI API, to drive their applications and services. These APIs allow systems to interact with advanced functionalities, including artificial intelligence and machine learning models, contributing significantly to enhancing the capabilities of the applications.
+Organizations rely on advanced APIs like OpenAI API to enhance their applications. These APIs enable interaction with AI and machine learning models. However, managing API tokens, which determine the cost of API calls, can be challenging. Over-usage leads to high costs, while under-usage wastes resources.
 
-However, with the use of APIs comes the necessity of managing tokens, which essentially act as the "currency" for leveraging the API's features. In the context of the OpenAI API, tokens are used to determine the cost of an API call based on the amount of data processed.
-
-While the OpenAI API provides a robust platform for implementing AI functionalities, managing the usage and associated costs of tokens can present a significant challenge. Over-usage can lead to unexpectedly high costs, and under-usage can mean underutilization of the allocated resources, neither of which is desirable for any organization.
-
-This challenge has underscored the need for a system that can monitor and manage the usage of tokens in real time, providing valuable insights to organizations and enabling them to optimize the cost-efficiency of their API usage.
-
-This document aims to delve into the process of building such a solution: an OpenAI API Tokens Usage Dashboard. The proposed dashboard is designed to leverage the strengths of GridDB for data management, Node.js for backend development, and React for front-end UI. Each of these technologies has been chosen for its specific strengths, which will be further detailed in the following sections.
-
-The goal is to provide a comprehensive guide to understanding the problem, conceptualizing the solution, and implementing it effectively using the chosen technologies.
+To address this challenge, a real-time token usage dashboard is proposed. It leverages GridDB for data management, Node.js for backend development, and React for the front-end UI. This document aims to provide a guide for understanding the problem, conceptualizing the solution, and implementing it effectively with the chosen technologies.
 
 ## Purpose of this Blog
 
-The primary purpose of this document is to provide a thorough and systematic guide to building an OpenAI API Tokens Usage Dashboard using GridDB, Node.js, and React. This guide aims to empower developers to understand and address the challenge of managing token usage and its associated costs when using the OpenAI API.
-
-The document is designed to:
-
-1. Illustrate the challenges associated with managing token usage in the context of the OpenAI API, emphasizing the need for a real-time monitoring.
-
-2. Present a detailed overview of the selected technologies—GridDB, Node.js, and React—and explain the rationale behind their selection.
-
-3. Walk through the process of designing and implementing a tokens usage dashboard, from requirements analysis and architectural design to backend implementatioPurpose of the Document
-   The primary purpose of this document is to provide a thorough and systematic guide to building an OpenAI API Tokens Usage Dashboard using GridDB, Node.js, and React. This guide aims to empower developers, project managers, and decision-makers to understand and address the challenge of managing token usage and its associated costs when using the OpenAI API.
-
-The document is designed to:
-
-1. Illustrate the challenges associated with managing token usage in the context of the OpenAI API, emphasizing the need for a real-time monitoring and management solution.
-
-2. Present a detailed overview of the selected technologies—GridDB, Node.js, and React—and explain the rationale behind their selection.
-
-3. Walk through the process of designing and implementing a tokens usage dashboard, from requirements analysis and architectural design to backend implementation and UI design.
-
-4. Demonstrate the process of integrating the OpenAI API with the proposed system.
-
-5. Highlight the testing, deployment for the developed dashboard.
-
-By the end of the document, readers should have a comprehensive understanding of the problem at hand, the proposed solution, and the process of implementing the solution. It will equip them with the knowledge required to create and deploy an OpenAI API Tokens Usage Dashboard, ultimately leading to more efficient and cost-effective use of the OpenAI API.
+The primary purpose of this document is to provide a thorough and systematic guide to building an OpenAI API Tokens Usage Dashboard using GridDB, Node.js, and React.
 
 ## Setup and Running
 
-Clone the source code from [GitHub](https://github.com/junwatu/openai-tokens-dashboard) repository:
+Clone the source code from the [GitHub](https://github.com/junwatu/openai-tokens-dashboard) repository:
 
 ```shell
 git clone https://github.com/junwatu/openai-tokens-dashboard.git
 ```
 
 > Make sure you have installed GridDB and Node.js LTS 18.
-> .If you dont have it please go the [**Installation**](/#installation) section in this blog post.
+> If you don't have it, please go to the [**Installation**](/#installation) section in this blog post.
 
-Change the directory to `openai-tokens-dashboard` folder then create or edit `.env` file.
+Change the directory to the `openai-tokens-dashboard` folder, then create or edit the `.env` file.
 
-You should have an access to OpenAI API, [create a key](https://platform.openai.com/account/api-keys) and then set the OpenAI API key that you have created into `OPENAI_API_KEY` environment variable:
+You should have access to the OpenAI API. [Create a key](https://platform.openai.com/account/api-keys) and then set the OpenAI API key that you have created into the `OPENAI_API_KEY` environment variable:
 
 ```ini
 OPENAI_API_KEY=put_your_key_here
 ```
 
-Install all the npm dependencies on the root project, `server` directory, and `ui` directory
+Install all the npm dependencies in the root project, `server` directory, and `ui` directory:
 
 ```sh
 cd openai-tokens-dashboard
@@ -73,39 +42,35 @@ cd ../ui
 npm install
 ```
 
-Change directory to `server` and then run the dashboard server
+Change the directory to `server`, and then run the dashboard server:
 
 ```sh
 cd server
 npm run start
 ```
 
-open another terminal and change directory from root project to `ui` directory then run the dashboard UI development
+Open another terminal and change the directory from the root project to the `ui` directory, then run the dashboard UI development:
 
 ```sh
 cd ui
 npm run dev
 ```
 
-If the server and client is running, open the browser `http://localhost:5173`
+If the server and client are running, open the browser and navigate to `http://localhost:5173`.
 
 ![init ui](images/openai-dashboard-ui-init.png)
 
-If everything running smoothly you will get the web user interface as the screenshot above shown.
+If everything is running smoothly, you will see the web user interface as shown in the screenshot above.
 
 ## Deep Dive into OpenAI API
 
-To effectively integrate and utilize the OpenAI API within our Tokens Usage Dashboard, it is essential to gain an understanding of the API's features, functionality, and available endpoints. This will enable us to retrieve token usage data, calculate costs, and provide real-time updates to the dashboard.
+To effectively integrate and utilize the OpenAI API within our Tokens Usage Dashboard, it is essential to gain an understanding of the API's features, functionality, and available endpoints. This will enable us to retrieve token usage data, calculate costs, and provide updates to the dashboard.
 
-Here is a closer look at the key aspects of the OpenAI API:
+Here is a closer look at the main key aspects of the OpenAI API:
 
-1. **API Documentation**: Begin by thoroughly reviewing the [official documentation](https://platform.openai.com/docs/api-reference) provided by OpenAI for the API. We will use chat completion for this project. The [Chat API](https://platform.openai.com/docs/api-reference/completions/create) documentation will outline the available endpoints, request/response formats, and any specific guidelines or limitations.
+1. **API Documentation**: Begin by reviewing the [official documentation](https://platform.openai.com/docs/api-reference) provided by OpenAI for the API. We will use chat completion for this project. The [Chat API](https://platform.openai.com/docs/api-reference/completions/create) documentation will outline the available endpoints, request/response formats, and any specific guidelines or limitations.
 
-2. **Authentication**: OpenAI API utilizes authentication using an API key or access token. The documentation will provide guidance on how to obtain and securely store the API key. It's important to handle the key securely and ensure it is not exposed in client-side code.
-
-3. **Rate Limiting**: OpenAI API enforces [rate limits](https://platform.openai.com/docs/guides/rate-limits/overview) to control the number of requests made within a specified timeframe. Understanding the rate limits imposed by the API is crucial for designing our dashboard's data retrieval strategy and ensuring compliance with the API's usage policies.
-
-4. **Cost**: OpenAI has different [pricing](https://openai.com/pricing) structures for each of the models they have released. For our project, we utilize the `gpt-3.5-turbo` or `gpt-3.5-turbo-16k` models. The cost table for these models is as follows:
+2. **Cost**: OpenAI has different [pricing](https://openai.com/pricing) structures for each of the models they have released. For our project, we utilize the `gpt-3.5-turbo` or `gpt-3.5-turbo-16k` models. The cost table for these models is as follows:
 
     | Model       | Input               | Output             |
     | ----------- | ------------------- | ------------------ |
@@ -122,7 +87,7 @@ OpenAI's API uses tokens as the basic unit of work when processing requests. Ess
 
 The tokenization process, which breaks text into tokens, follows a specific algorithm used by the model. For example, in English, a token can be as short as one character or as long as one word, such as "a" or "apple". However, it's important to note that not all words are a single token. For instance, the word "chatbot" is a single token, but a word like "ChatGPT" might be broken into multiple tokens ("Chat", "##G", "##PT") based on how the model was trained to tokenize text.
 
-The number of tokens in an API call significantly affects both the cost of the call and whether the call works at all. OpenAI charges per token, and the models have a maximum limit of tokens they can handle in a single call. For instance, as of September 2021, the gpt-3.5-turbo model has a maximum limit of 4096 tokens per call.
+The number of tokens in an API call significantly affects both the cost of the call and whether the call works at all. OpenAI charges per token, and the models have a maximum limit of tokens they can handle in a single call. For instance, as of September 2021, `the gpt-3.5-turbo` model has a maximum limit of 4096 tokens per call.
 
 Understanding how to count tokens is crucial for controlling costs and ensuring your API calls work as intended. To manage costs and make efficient use of the OpenAI API, it is essential to understand how tokens work, how they affect the API calls, and how to count them accurately.
 
@@ -136,13 +101,9 @@ Each API call consumes a certain number of tokens, which include not only the to
 
 Given the direct correlation between token usage and cost, as well as the impact on API call success, it's clear that monitoring and managing token usage is crucial when using OpenAI's API. There are several reasons why this is important:
 
-1. **Budget Control**: By monitoring token usage, users can gain insights into how their usage patterns align with their budget. If token usage is high, users might need to adjust their utilization of the API to avoid overspending.
+1. **Budget Estimation**: By monitoring token usage, users can gain insights into how their usage patterns align with their budget. To design a new application it will be very 0valuable if we can estimate the cost of the tokens.
 
-2. **Avoiding Failed API Calls**: Keeping track of token usage helps ensure that the total tokens in an API call do not exceed the model's maximum limit, thus preventing failed calls due to token overload. This is particularly important in applications where the reliability of the service is paramount.
-
-3. **Optimizing API Usage**: Monitoring tokens can provide valuable insights into how efficiently the API is being used. For instance, if a large number of tokens are being used for control instructions or formatting, users might be able to refine their usage to reduce the token count without sacrificing the functionality of their application.
-
-While it's clear that monitoring and managing token usage is essential, it can be challenging to do this effectively without the right tools and methodologies. That's where the concept of a Tokens Usage Dashboard comes into play. In the next section, we will explore the role and benefits of such a dashboard.
+2. **Optimizing API Usage**: Monitoring tokens can provide valuable insights into how efficiently the API is being used. For instance, if a large number of tokens are being used for control instructions or formatting, users might be able to refine their usage to reduce the token count without sacrificing the functionality of their application.
 
 ## Tokens Usage Dashboard
 
@@ -150,13 +111,9 @@ While it's clear that monitoring and managing token usage is essential, it can b
 
 A Tokens Usage Dashboard is a tool that allows users to monitor and manage the token usage of their OpenAI API calls. Such a dashboard plays a significant role in providing insights into token usage and supporting decision-making processes related to OpenAI API use. Here are some key benefits of implementing a Tokens Usage Dashboard:
 
-1. Real-Time Monitoring: A Tokens Usage Dashboard can provide real-time updates on token usage. This allows users to keep a constant eye on their token consumption and react promptly to any unusual spikes or patterns that may occur.
+1. Monitoring: A Tokens Usage Dashboard can provide updates on token usage.
 
-2. Historical Data Analysis: The dashboard can store historical data on token usage, enabling users to perform trend analysis and identify patterns over time. This can be particularly useful for forecasting future token usage and planning budget accordingly.
-
-3. Error Prevention: By monitoring the number of tokens used in each API call, the dashboard can help prevent errors due to exceeding the model's token limit. This can significantly enhance the reliability and performance of applications using the OpenAI API.
-
-4. Ease of Use: A well-designed dashboard provides an easy-to-understand visual representation of token usage. This makes it accessible to both technical and non-technical users, promoting broader understanding and more effective decision-making.
+2. Ease of Use: A well-designed dashboard provides an easy-to-understand visual representation of token usage. This makes it accessible to both technical and non-technical users, promoting broader understanding and more effective decision-making.
 
 In the next section, we will delve into why GridDB, Node.js, and React are chosen as the technologies to build this dashboard, and how they contribute to achieving these benefits.
 
@@ -209,19 +166,18 @@ Here is an overview of the proposed architectural design for the solution:
 2. **Front-End (Client-Side)**:
 
     - **React**: The front-end will be developed using the React JavaScript library. React's component-based approach and virtual DOM will enable efficient rendering and ensure a responsive user interface.
-    - **User Interface Components**: We will design and develop reusable UI components that will be used to create the dashboard interface. These components will handle user interactions, data visualization, and data filtering/search functionalities.
 
 3. **Back-End (Server-Side)**:
 
     - **Node.js**: The back-end will be built using Node.js, a popular server-side JavaScript runtime. Node.js provides an event-driven, non-blocking I/O model, making it suitable for handling concurrent requests and real-time updates.
     - **Express.js**: We will use Express.js, a web application framework for Node.js, to simplify the development of RESTful APIs and handle routing, middleware, and request/response handling.
     - **GridDB**: GridDB, a high-performance in-memory database, will be utilized for data management and storage. GridDB's distributed architecture and scalability features make it well-suited for handling large volumes of token usage data.
-    - **OpenAI API Integration**: The server-side code will integrate with the OpenAI API to retrieve token usage data and calculate the associated costs. This integration will involve making API requests, handling authentication, and parsing the response data.
+    - **OpenAI API Integration**: The server-side code will integrate with the OpenAI API to retrieve token usage data. This integration will involve making API requests, handling authentication, and parsing the response data.
 
 4. **Data Flow**:
     - The client-side will communicate with the server-side through RESTful API endpoints exposed by the Node.js backend.
     - The server-side will interact with GridDB to store and retrieve token usage data efficiently.
-    - The server-side will also interact with the OpenAI API to retrieve real-time token usage information and perform cost calculations.
+    - The server-side will also interact with the OpenAI API to retrieve real-time token usage information.
     - The processed data will be sent back to the client-side as JSON responses, which will be used to update the dashboard's user interface.
 
 A clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
