@@ -219,26 +219,6 @@ Here is an overview of the proposed architectural design for the solution:
 
 A clear separation of concerns between the front-end and back-end, allows for easy integration with external APIs, and provides a solid foundation for future enhancements and additions to the dashboard.
 
-### Creating an Intuitive UI
-
-To ensure an intuitive and user-friendly interface for the OpenAI API Tokens Usage Dashboard, we will leverage the power of React. By implementing the following principles, we can create a responsive and dynamic UI that provides an efficient and pleasant user experience:
-
-1. **Responsive Design**: Implement a responsive layout that adapts to different screen sizes and devices. Ensure that the dashboard remains visually appealing and usable on various platforms, including desktop, tablets, and mobile devices.
-
-2. **Real-time Updates**: Use React's state management to update the dashboard in real time, updated token usage data from the server and reflect the changes dynamically on the UI.
-
-The user interface of the web application consists of two main parts:
-
--   **Prompt Input**: This section is where you can input the prompt for the OpenAI API.
--   **Dashboard**: This section displays the token usage and provides an estimate of the associated cost.
-    There are three UI elements to display token and cost data:
-
-    -   **Cost**: Display the current prompt cost.
-    -   **Tokens**: Display the current tokens count.
-    -   **All Total Cost**: Display all the total cost from the GridDB database.
-
-![Dashboard-UI](images/openai-dashboard-ui.png)
-
 ## Installation
 
 ### Setting up GridDB
@@ -284,8 +264,6 @@ Upgrade or install Node.js LTS from their website [nodejs.org](https://nodejs.or
 ## Building The OpenAI Dashboard
 
 You can look into the source code of this project application [here](https://github.com/junwatu/openai-tokens-dashboard).
-
-The project application is designed as a server and client architecture. Where the server will provide back-end operations and the client is use for human interaction and data visualizing.
 
 ### Integrating GridDB with Node.js
 
@@ -351,18 +329,122 @@ Node.js server in this application have three main routes:
 
 ### Managing Tokens with the OpenAI API
 
--   7.1 Integrating OpenAI API with Node.js
--   7.2 Implementing Tokens Usage and Cost Tracking
+Integrating OpenAI API with Node.js can be done by the help of official library [`openai-node`](https://github.com/openai/openai-node). The default OpenAI model in this project is `gpt-3.5-turbo-16k`.
+
+```js
+// services/prompt.js
+
+import { Configuration, OpenAIApi } from 'openai';
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+//...
+
+const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo-16k',
+    messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: prompt },
+    ],
+    max_tokens: 1000,
+});
+```
+
+The tokens cost calculation is based on the `priceTag` reference.
+
+```js
+const priceTag = {
+    prompt: 0.003,
+    completion: 0.004,
+};
+```
+
+if you change the OpenAI model, make sure to change the price tag reference (see [here](https://openai.com/pricing)) also.
 
 ### Building the Dashboard UI with React
 
--   8.1 Establishing the React Framework
--   8.2 Constructing Components for the Dashboard
--   8.3 Integrating the Backend with the Dashboard
+To ensure an intuitive and user-friendly interface for the OpenAI API Tokens Usage Dashboard, we will leverage the power of React.
+
+The user interface of the web application consists of two main parts:
+
+-   **Prompt Input**: This section is where you can input the prompt for the OpenAI API.
+-   **Dashboard**: This section displays the token usage and provides an estimate of the associated cost.
+    There are three UI elements to display token and cost data:
+
+    -   **Cost**: Display the current prompt cost.
+    -   **Tokens**: Display the current tokens count.
+    -   **All Total Cost**: Display all the total cost from the GridDB database.
+
+![Dashboard-UI](images/openai-dashboard-ui.png)
+
+The source code for the dashboard user interface is located in `ui` directory. React make it so easy to build data interactive user interface. From the Node.js server routes earlier, we can easily consume and use it to save and read data from the dasboard.
+
+To call node.js server route and process the response data, all we need todo is using `fetch` WebAPI:
+
+```js
+fetch('http://localhost:2001/api', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ input: inputText }),
+})
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        setUsageData(data.data.usage);
+        // Update totalTokens
+        const promptTokensInK = data.data.usage.prompt_tokens / 1000;
+        const completionTokensInK = data.data.usage.completion_tokens / 1000;
+        const promptTokensCost = promptTokensInK * 0.003;
+        const completionTokensCost = completionTokensInK * 0.004;
+        setTotalTokens(data.data.usage.total_tokens);
+        setTotalCost(promptTokensCost + completionTokensCost);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+```
+
+`inputText` is where we put the prompt data for OpenAI API. What important to note here is, OpenAI API has a specific response format, such as:
+
+```js
+{
+	id: 'chatcmpl-7YMGXEuuR4Wi7HKNFa5XAbTL5hWgb',
+	object: 'chat.completion',
+	created: 1688423097,
+	model: 'gpt-3.5-turbo-16k-0613',
+	choices: [ { index: 0, message: [Object], finish_reason: 'stop' } ],
+	usage: { prompt_tokens: 148, completion_tokens: 6, total_tokens: 154 }
+}
+```
+
+It's so easy to process the data, wether in the server side or in the client side. To display the data in React, you can use `useState` to automatically update the UI.
+
+> In this project we use **Tremor** UI that specifically built for dashboard application. Check them out [here](https://github.com/tremorlabs/tremor)
+
+```js
+<Card>
+    <div className="h-24">
+        <Title>Tokens</Title>
+        <Metric>{totalTokens}</Metric>
+        <Flex className="mt-2">
+            {usageData ? (
+                <Text>
+                    {usageData.prompt_tokens} Prompt{' '}
+                    {usageData.completion_tokens} Completion{' '}
+                </Text>
+            ) : (
+                <p>Loading...</p>
+            )}
+        </Flex>
+    </div>
+</Card>
+```
 
 ## Conclusion
 
--   11.1 Reflecting on the Solution
--   11.2 Potential for Future Enhancements
-
-## References
+The project in this blog post is just an MVP. You can enhance it further with add features like history or logs view, better data visualization, better analytic view and so on.
