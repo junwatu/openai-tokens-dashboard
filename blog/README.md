@@ -41,6 +41,48 @@ The document is designed to:
 
 By the end of the document, readers should have a comprehensive understanding of the problem at hand, the proposed solution, and the process of implementing the solution. It will equip them with the knowledge required to create and deploy an OpenAI API Tokens Usage Dashboard, ultimately leading to more efficient and cost-effective use of the OpenAI API.
 
+## Setup and Running
+
+Clone the source code from [GitHub](https://github.com/junwatu/openai-tokens-dashboard) repository,
+
+```shell
+git clone https://github.com/junwatu/openai-tokens-dashboard.git
+```
+
+> Make sure you have installed GridDB and Node.js LTS 18.
+> .If you dont have it please go the [**Installation**](/#installation) section in this blog post.
+
+Change the directory to `openai-tokens-dashboard` folder then create or edit `.env` file. Set the OpenAI API key:
+
+```ini
+OPENAI_API_KEY=put_your_key_here
+
+```
+
+Install all the npm dependencies
+
+```shell
+npm install
+```
+
+Change directory to `server` and then run the server
+
+```shell
+cd server
+npm run start
+```
+
+open another terminal and change directory from root project to `ui` directory then run the UI development
+
+```shell
+cd ui
+npm run dev
+```
+
+If the server and client is running, open the browser `http://localhost:5173`
+
+![init ui](images/openai-dashboard-ui-init.png)
+
 ## Deep Dive into OpenAI API
 
 To effectively integrate and utilize the OpenAI API within our Tokens Usage Dashboard, it is essential to gain an understanding of the API's features, functionality, and available endpoints. This will enable us to retrieve token usage data, calculate costs, and provide real-time updates to the dashboard.
@@ -186,13 +228,25 @@ The user interface of the web application consists of two main parts:
 
 -   **Prompt Input**: This section is where you can input the prompt for the OpenAI API.
 -   **Dashboard**: This section displays the token usage and provides an estimate of the associated cost.
+    There are three UI elements to display token and cost data:
+
+    -   **Cost**: Display the current prompt cost.
+    -   **Tokens**: Display the current tokens count.
+    -   **All Total Cost**: Display all the total cost from the GridDB database.
 
 ![Dashboard-UI](images/openai-dashboard-ui.png)
 
-## Implementing the Backend with GridDB and Node.js
+## Installation
 
--   6.1 Setting up GridDB: Data Management for Our Dashboard
--   6.2 Integrating GridDB with Node.js: Building the Backend
+## Setting up GridDB
+
+GridDB is easy to setup. Please go to this [link](https://docs.griddb.net/latest/gettingstarted/using-apt/) for fresh installation on ubuntu or [here](https://docs.griddb.net/latest/gettingstarted/wsl/) to install it on Windows via WSL (Windows Subsystem Linux).
+
+##
+
+## Integrating GridDB with Node.js
+
+The heart of the application that connect Node.js server and GridDB database is `griddb.cjs` file. This file located in `lib` directory
 
 ## Managing Tokens with the OpenAI API
 
