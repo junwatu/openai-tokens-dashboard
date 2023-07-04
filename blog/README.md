@@ -21,9 +21,7 @@ git clone https://github.com/junwatu/openai-tokens-dashboard.git
 > Make sure you have installed GridDB and Node.js LTS 18.
 > If you don't have it, please go to the [**Installation**](/#installation) section in this blog post.
 
-Change the directory to the `openai-tokens-dashboard` folder, then create or edit the `.env` file.
-
-You should have access to the OpenAI API. [Create a key](https://platform.openai.com/account/api-keys) and then set the OpenAI API key that you have created into the `OPENAI_API_KEY` environment variable:
+Change the directory to the `openai-tokens-dashboard` folder, then create or edit the `.env` file. You should have access to the OpenAI API. [Create a key](https://platform.openai.com/account/api-keys) and then set the OpenAI API key that you have created into the `OPENAI_API_KEY` environment variable:
 
 ```ini
 OPENAI_API_KEY=put_your_key_here
