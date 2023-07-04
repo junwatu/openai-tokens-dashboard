@@ -60,20 +60,27 @@ You should have an access to OpenAI API, [create a key](https://platform.openai.
 OPENAI_API_KEY=put_your_key_here
 ```
 
-Install all the npm dependencies
+Install all the npm dependencies on the root project, `server` directory, and `ui` directory
 
 ```sh
+cd openai-tokens-dashboard
+npm install
+
+cd server
+npm install
+
+cd ../ui
 npm install
 ```
 
-Change directory to `server` and then run the server
+Change directory to `server` and then run the dashboard server
 
 ```sh
 cd server
 npm run start
 ```
 
-open another terminal and change directory from root project to `ui` directory then run the UI development
+open another terminal and change directory from root project to `ui` directory then run the dashboard UI development
 
 ```sh
 cd ui
@@ -253,23 +260,21 @@ Jul 04 04:47:12 GenAI systemd[1]: Started GridDB database server..
 
 ### Setting up Node.js
 
-The project in this blog post using Node.je version LTS version 18 and it's recommended that you have the same version. Check if you have any installed Node.js before:
+The project discussed in this blog post utilizes Node.js LTS version 18, and it is recommended that you have the same version installed. To check if you have Node.js installed, run the following command:
 
 ```
 node --version
 ```
 
-Upgrade or install Node.js LTS from their website [nodejs.org](https://nodejs.org/en/download).
+If Node.js is not installed or you have an older version, it is recommended to upgrade or install Node.js LTS from their official website [nodejs.org](https://nodejs.org/en/download).
 
 ## Building The OpenAI Dashboard
 
-You can look into the source code of this project application [here](https://github.com/junwatu/openai-tokens-dashboard).
+You can examine the source code of this project application [here](https://github.com/junwatu/openai-tokens-dashboard).
 
 ### Integrating GridDB with Node.js
 
-Node.js can be used as a simple server but for the sake of maintenance and simplify code process, we can use framework such as [express.js](http://expressjs.com/) to make data parsing and routes management even easier.
-
-The heart of the application that connect Node.js server and the GridDB database is `griddb.cjs` file. This file is located in `lib` directory of the project. With the help of functions in this file you can initialize GridDB, save data, query the data, etc.
+While Node.js can serve as a simple server, using a framework like [Express.js](http://expressjs.com/) can simplify data parsing and route management, making maintenance easier. The core of the application that connects the Node.js server with the GridDB database is the `griddb.cjs` file. This file is located in the `lib` directory of the project. The functions in this file allow you to initialize GridDB, save data, query the data, and more.
 
 To initialize GridDB, import `griddb.cjs` in the Node.js server:
 
@@ -282,13 +287,13 @@ const { collectionDb, store, conInfo, containerName } =
     await GridDB.initGridDbTS();
 ```
 
-and then to save data:
+To save data, you can use the following function:
 
 ```js
 async function saveData({ prompt, cost, details }) {
     const id = generateRandomID();
 
-    // Data save is ARRAY ONLY
+    // Data is saved as an array
     const content = [parseInt(id), prompt, cost, details];
 
     const saveStatus = await GridDB.insert(content, collectionDb);
@@ -302,22 +307,20 @@ async function saveData({ prompt, cost, details }) {
 }
 ```
 
-`saveData` will save data in GridDB as a collection with these fields:
+The `saveData` function saves the data in GridDB as a collection with the following fields:
 
 -   **id**: Id for the collection (Integer type).
 -   **prompt**: Prompt (String).
 -   **cost**: The cost of each OpenAI API call (String).
--   **details**: Details data for tokens (String)
+-   **details**: Details data for tokens (String).
 
-The most important thing to note is, you should save the data as an array `content`.
-
-To query all data from GridDB
+It is important to note that the data should be saved as an array `content` and to query all data from GridDB:
 
 ```js
 const data = await GridDB.queryAll(conInfo, store);
 ```
 
-The connection information `connInfo` and store or collection `store` is auto provide by functions in `griddb.cjs`. All you need to do is using the data for further processing.
+The connection information `conInfo` and the store or collection `store` are automatically provided by the functions in `griddb.cjs`. You can utilize the data for further processing as needed.
 
 Node.js server in this application have three main routes:
 
@@ -329,7 +332,7 @@ Node.js server in this application have three main routes:
 
 ### Managing Tokens with the OpenAI API
 
-Integrating OpenAI API with Node.js can be done by the help of official library [`openai-node`](https://github.com/openai/openai-node). The default OpenAI model in this project is `gpt-3.5-turbo-16k`.
+Integrating the OpenAI API with Node.js can be achieved with the help of the official library [`openai-node`](https://github.com/openai/openai-node). The default OpenAI model used in this project is `gpt-3.5-turbo-16k`.
 
 ```js
 // services/prompt.js
@@ -380,9 +383,7 @@ The user interface of the web application consists of two main parts:
 
 ![Dashboard-UI](images/openai-dashboard-ui.png)
 
-The source code for the dashboard user interface is located in `ui` directory. React make it so easy to build data interactive user interface. From the Node.js server routes earlier, we can easily consume and use it to save and read data from the dasboard.
-
-To call node.js server route and process the response data, all we need todo is using `fetch` WebAPI:
+The source code for the dashboard user interface is located in the `ui` directory. React makes it incredibly easy to build interactive user interfaces for data. As we have seen from the Node.js server routes earlier, we can effortlessly consume and utilize them to save and read data from the dashboard. To call the Node.js server route and process the response data, all we need to do is use the `fetch` WebAPI:
 
 ```js
 fetch('http://localhost:2001/api', {
@@ -409,7 +410,7 @@ fetch('http://localhost:2001/api', {
     });
 ```
 
-`inputText` is where we put the prompt data for OpenAI API. What important to note here is, OpenAI API has a specific response format, such as:
+`inputText` is where we input the prompt data for the OpenAI API. It is important to note that the OpenAI API has a specific response format, for example:
 
 ```js
 {
@@ -422,9 +423,9 @@ fetch('http://localhost:2001/api', {
 }
 ```
 
-It's so easy to process the data, wether in the server side or in the client side. To display the data in React, you can use `useState` to automatically update the UI.
+It's easy to process the data, whether on the server side or the client side. To display the data in React, you can use `useState` to automatically update the UI.
 
-> In this project we use **Tremor** UI that specifically built for dashboard application. Check them out [here](https://github.com/tremorlabs/tremor)
+> In this project, we use **Tremor** UI, which is specifically built for dashboard applications. You can check it out [here](https://github.com/tremorlabs/tremor).
 
 ```js
 <Card>
@@ -447,4 +448,4 @@ It's so easy to process the data, wether in the server side or in the client sid
 
 ## Conclusion
 
-The project in this blog post is just an MVP. You can enhance it further with add features like history or logs view, better data visualization, better analytic view and so on.
+The project in this blog post is just an MVP. It can be further enhanced by adding features like a history or logs view, improved data visualization, and better analytical views, among others.
