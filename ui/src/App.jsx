@@ -16,7 +16,7 @@ function App() {
     const [usageData, setUsageData] = useState(null);
     const [totalCost, setTotalCost] = useState(0);
     const [totalTokens, setTotalTokens] = useState(0);
-    const [totalWords, setTotalWords] = useState({ words: 0 });
+    const [allTotalCost, setAllTotalCost] = useState(0);
     const [inputText, setInputText] = useState('');
 
     useEffect(() => {
@@ -57,6 +57,15 @@ function App() {
                 }
             })
             .catch((error) => console.error(error));
+
+        fetch('http://localhost:2001/api/totalcost')
+            .then((response) => response.json())
+            .then((data) => {
+                setAllTotalCost(data.totalCost);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
     const handleExamineClick = () => {
@@ -92,6 +101,15 @@ function App() {
             .catch((error) => {
                 console.error(error);
             });
+
+        fetch('http://localhost:2001/api/totalcost')
+            .then((response) => response.json())
+            .then((data) => {
+                setAllTotalCost(data.totalCost);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     return (
@@ -106,7 +124,7 @@ function App() {
                         <Col numColSpanLg={4}>
                             <Card className="h-full">
                                 <div className="h-60">
-                                    <Title>Type</Title>
+                                    <Title>Prompt</Title>
                                     <Grid className="gap-4">
                                         <div className="flex h-auto py-5">
                                             <textarea
@@ -138,7 +156,7 @@ function App() {
                                 <Card className="h-24">
                                     {usageData ? (
                                         <div>
-                                            <Title>API Usage Cost</Title>
+                                            <Title>Cost</Title>
                                             <Metric>
                                                 ${totalCost.toFixed(4)}
                                             </Metric>
@@ -170,11 +188,11 @@ function App() {
                                 </Card>
                                 <Card>
                                     <div className="h-24">
-                                        <Title>Words Count</Title>
-                                        {totalWords ? (
-                                            <Metric>{totalWords.words}</Metric>
+                                        <Title> All Total Cost</Title>
+                                        {allTotalCost ? (
+                                            <Metric>${allTotalCost}</Metric>
                                         ) : (
-                                            <Metric>0</Metric>
+                                            <Metric>$0</Metric>
                                         )}
                                     </div>
                                 </Card>
