@@ -379,6 +379,13 @@ fetch('http://localhost:2001/api', {
 
 It's easy to process the data, whether on the server side or the client side. To display the data in React, you can use `useState` to automatically update the UI.
 
+```js
+const [totalTokens, setTotalTokens] = useState(0);
+
+// Set total tokens to update Tokens ui
+setTotalTokens(data.data.usage.total_tokens);
+```
+
 > In this project, we use **Tremor** UI, which is specifically built for dashboard applications. You can check it out [here](https://github.com/tremorlabs/tremor).
 
 ```js
