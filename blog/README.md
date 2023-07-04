@@ -43,7 +43,7 @@ By the end of the document, readers should have a comprehensive understanding of
 
 ## Setup and Running
 
-Clone the source code from [GitHub](https://github.com/junwatu/openai-tokens-dashboard) repository,
+Clone the source code from [GitHub](https://github.com/junwatu/openai-tokens-dashboard) repository:
 
 ```shell
 git clone https://github.com/junwatu/openai-tokens-dashboard.git
@@ -52,29 +52,30 @@ git clone https://github.com/junwatu/openai-tokens-dashboard.git
 > Make sure you have installed GridDB and Node.js LTS 18.
 > .If you dont have it please go the [**Installation**](/#installation) section in this blog post.
 
-Change the directory to `openai-tokens-dashboard` folder then create or edit `.env` file. Set the OpenAI API key:
+Change the directory to `openai-tokens-dashboard` folder then create or edit `.env` file.
+
+You should have an access to OpenAI API, [create a key](https://platform.openai.com/account/api-keys) and then set the OpenAI API key that you have created into `OPENAI_API_KEY` environment variable:
 
 ```ini
 OPENAI_API_KEY=put_your_key_here
-
 ```
 
 Install all the npm dependencies
 
-```shell
+```sh
 npm install
 ```
 
 Change directory to `server` and then run the server
 
-```shell
+```sh
 cd server
 npm run start
 ```
 
 open another terminal and change directory from root project to `ui` directory then run the UI development
 
-```shell
+```sh
 cd ui
 npm run dev
 ```
@@ -82,6 +83,8 @@ npm run dev
 If the server and client is running, open the browser `http://localhost:5173`
 
 ![init ui](images/openai-dashboard-ui-init.png)
+
+If everything running smoothly you will get the web user interface as the screenshot above shown.
 
 ## Deep Dive into OpenAI API
 
@@ -238,9 +241,45 @@ The user interface of the web application consists of two main parts:
 
 ## Installation
 
-## Setting up GridDB
+### Setting up GridDB
 
 GridDB is easy to setup. Please go to this [link](https://docs.griddb.net/latest/gettingstarted/using-apt/) for fresh installation on ubuntu or [here](https://docs.griddb.net/latest/gettingstarted/wsl/) to install it on Windows via WSL (Windows Subsystem Linux).
+
+If you alreaady jave it in your system, check if the griddb service is running with this commmand
+
+```
+sudo systemctl status gridstore
+```
+
+This Ubuntu OS command line output shows the griddb service is running:
+
+```shell
+● gridstore.service - GridDB database server.
+     Loaded: loaded (/lib/systemd/system/gridstore.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2023-07-04 04:47:12 +07; 9h ago
+   Main PID: 575 (gsserver)
+      Tasks: 34 (limit: 7017)
+     Memory: 144.7M
+     CGroup: /system.slice/gridstore.service
+             └─575 /usr/bin/gsserver --conf /var/lib/gridstore/conf
+
+Jul 04 04:47:08 GenAI systemd[1]: Starting GridDB database server....
+Jul 04 04:47:09 GenAI gridstore[381]: Starting gridstore service:
+Jul 04 04:47:12 GenAI gridstore[526]: ..
+Jul 04 04:47:12 GenAI gridstore[526]: Started node.
+Jul 04 04:47:12 GenAI gridstore[381]: [ OK ]
+Jul 04 04:47:12 GenAI systemd[1]: Started GridDB database server..
+```
+
+### Setting up Node.js
+
+The project in this blog post using Node.je version LTS version 18 and it's recommended that you have the same version. Check if you have any installed Node.js before:
+
+```
+node --version
+```
+
+Upgrade or install Node.js LTS from their website [nodejs.org](https://nodejs.org/en/download).
 
 ##
 
