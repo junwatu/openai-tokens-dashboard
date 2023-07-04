@@ -186,7 +186,7 @@ A clear separation of concerns between the front-end and back-end, allows for ea
 
 GridDB is easy to setup. Please go to this [link](https://docs.griddb.net/latest/gettingstarted/using-apt/) for fresh installation on ubuntu or [here](https://docs.griddb.net/latest/gettingstarted/wsl/) to install it on Windows via WSL (Windows Subsystem Linux).
 
-If you alreaady jave it in your system, check if the griddb service is running with this commmand
+If you alreaady have it in your system, check if the griddb service is running with this commmand
 
 ```
 sudo systemctl status gridstore
@@ -399,6 +399,8 @@ It's easy to process the data, whether on the server side or the client side. To
     </div>
 </Card>
 ```
+
+![tokens-view](images/tokens-ui.png)
 
 ## Conclusion
 
