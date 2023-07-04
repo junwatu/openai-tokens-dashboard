@@ -74,8 +74,19 @@ router.post('/api', async (req, res) => {
 
 router.get("/api", async (req, res) => {
 	const data = await GridDB.queryAll(conInfo, store)
-	console.log(data)
 	res.json({ data })
+})
+
+router.get("/api/totalcost", async (req, res) => {
+	const data = await GridDB.queryAll(conInfo, store)
+	const dataArray = data.results
+	let totalCost = 0;
+
+	dataArray.forEach(element => {
+		totalCost += Number(element.cost)
+	});
+
+	res.json({ totalCost: totalCost.toFixed(5) })
 })
 
 export default router;
