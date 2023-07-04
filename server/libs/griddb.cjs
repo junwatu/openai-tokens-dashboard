@@ -154,9 +154,9 @@ async function queryAll(conInfo, store) {
 			const row = rowset.next();
 			const rowData = {
 				id: `${row[0]}`,
-				title: row[1],
-				content: row[2],
-				image: row[3],
+				prompt: row[1],
+				cost: row[2],
+				details: row[3],
 			};
 			results.push(rowData);
 		}
