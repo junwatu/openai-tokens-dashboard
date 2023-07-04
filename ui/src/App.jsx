@@ -47,14 +47,6 @@ function App() {
 
                 setTotalTokens(data.data.usage.total_tokens);
                 setTotalCost(promptTokensCost + completionTokensCost);
-
-                const wordsCount = data.data.choices[0].message.content;
-
-                try {
-                    setTotalWords(JSON.parse(wordsCount));
-                } catch (error) {
-                    console.log(error);
-                }
             })
             .catch((error) => console.error(error));
 
@@ -88,15 +80,6 @@ function App() {
                 const completionTokensCost = completionTokensInK * 0.004;
                 setTotalTokens(data.data.usage.total_tokens);
                 setTotalCost(promptTokensCost + completionTokensCost);
-
-                // Update totalWords
-                const wordsCount = data.data.choices[0].message.content;
-                console.log(`Words: ${wordsCount}`);
-                try {
-                    setTotalWords(JSON.parse(wordsCount));
-                } catch (error) {
-                    console.log(error);
-                }
             })
             .catch((error) => {
                 console.error(error);
