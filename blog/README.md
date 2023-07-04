@@ -281,18 +281,80 @@ node --version
 
 Upgrade or install Node.js LTS from their website [nodejs.org](https://nodejs.org/en/download).
 
-##
+## Building The OpenAI Dashboard
 
-## Integrating GridDB with Node.js
+You can look into the source code of this project application [here](https://github.com/junwatu/openai-tokens-dashboard).
 
-The heart of the application that connect Node.js server and GridDB database is `griddb.cjs` file. This file located in `lib` directory
+The project application is designed as a server and client architecture. Where the server will provide back-end operations and the client is use for human interaction and data visualizing.
 
-## Managing Tokens with the OpenAI API
+### Integrating GridDB with Node.js
+
+Node.js can be used as a simple server but for the sake of maintenance and simplify code process, we can use framework such as [express.js](http://expressjs.com/) to make data parsing and routes management even easier.
+
+The heart of the application that connect Node.js server and the GridDB database is `griddb.cjs` file. This file is located in `lib` directory of the project. With the help of functions in this file you can initialize GridDB, save data, query the data, etc.
+
+To initialize GridDB, import `griddb.cjs` in the Node.js server:
+
+```js
+// in the routes.js file
+
+import * as GridDB from './libs/griddb.cjs';
+
+const { collectionDb, store, conInfo, containerName } =
+    await GridDB.initGridDbTS();
+```
+
+and then to save data:
+
+```js
+async function saveData({ prompt, cost, details }) {
+    const id = generateRandomID();
+
+    // Data save is ARRAY ONLY
+    const content = [parseInt(id), prompt, cost, details];
+
+    const saveStatus = await GridDB.insert(content, collectionDb);
+    console.log(`GridDB save operation: ${saveStatus.status}`);
+
+    if (saveStatus.status) {
+        return { status: saveStatus, operation: 'save' };
+    } else {
+        return { status: saveStatus, operation: 'save' };
+    }
+}
+```
+
+`saveData` will save data in GridDB as a collection with these fields:
+
+-   **id**: Id for the collection (Integer type).
+-   **prompt**: Prompt (String).
+-   **cost**: The cost of each OpenAI API call (String).
+-   **details**: Details data for tokens (String)
+
+The most important thing to note is, you should save the data as an array `content`.
+
+To query all data from GridDB
+
+```js
+const data = await GridDB.queryAll(conInfo, store);
+```
+
+The connection information `connInfo` and store or collection `store` is auto provide by functions in `griddb.cjs`. All you need to do is using the data for further processing.
+
+Node.js server in this application have three main routes:
+
+| Routes                              | Operation | Purpose                                                           |
+| ----------------------------------- | --------- | ----------------------------------------------------------------- |
+| http://localhost:2001/api           | GET       | Show all the data in the GridDB database                          |
+| http://localhost:2001/api           | POST      | Call OpenAI API and save the data response in the GridDB database |
+| http://localhost:2002/api/totalcost | GET       | Get the cost data for all prompts                                 |
+
+### Managing Tokens with the OpenAI API
 
 -   7.1 Integrating OpenAI API with Node.js
 -   7.2 Implementing Tokens Usage and Cost Tracking
 
-## Building the Dashboard UI with React
+### Building the Dashboard UI with React
 
 -   8.1 Establishing the React Framework
 -   8.2 Constructing Components for the Dashboard
