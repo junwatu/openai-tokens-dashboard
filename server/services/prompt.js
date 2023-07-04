@@ -5,6 +5,22 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+function analyticsCalculation({ prompt_tokens, completion_tokens }) {
+	/**
+	 * Default cost for GPT-3.5-Turbo-16K
+	 * Look here for other models pricing https://openai.com/pricing
+	 */
+	const priceTag = {
+		prompt: 0.003,
+		completion: 0.004,
+	};
+	const promptTokensCost = (prompt_tokens / 1000) * priceTag.prompt;
+	const completionTokensCost =
+		(completion_tokens / 1000) * priceTag.completion;
+
+	return { cost: promptTokensCost + completionTokensCost };
+}
+
 async function wordsCountFromPrompt({ promptData }) {
 	if (!promptData) {
 		promptData =
@@ -17,6 +33,7 @@ async function wordsCountFromPrompt({ promptData }) {
 	
 	----
 	Answer with JSON format {words: count_here} ONLY`;
+
 	try {
 		const completion = await openai.createChatCompletion({
 			model: 'gpt-3.5-turbo',
@@ -26,11 +43,20 @@ async function wordsCountFromPrompt({ promptData }) {
 			],
 			max_tokens: 1000,
 		});
-		return completion.data;
-	} catch (error) {
-		return error.messages
-	}
 
+		const costTotal = analyticsCalculation({
+			prompt_tokens: completion.data.usage.prompt_tokens,
+			completion_tokens: completion.data.usage.completion_tokens,
+		});
+
+		const dataCustom = completion.data;
+		dataCustom.cost = costTotal.cost;
+
+		return dataCustom;
+	} catch (error) {
+		console.log(error);
+		return error.messages;
+	}
 }
 
 export { wordsCountFromPrompt };

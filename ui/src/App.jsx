@@ -29,10 +29,11 @@ function App() {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setUsageData(data.data.usage);
 
                 /**
-                 * Default cost for GPT-3.5-Turbo 16K
+                 * Default cost for GPT-3.5-Turbo
                  */
 
                 // Determine the number of tokens in thousands

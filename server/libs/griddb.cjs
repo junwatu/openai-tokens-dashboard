@@ -1,6 +1,6 @@
 const griddb = require('griddb-node-api');
 
-const containerName = 'OpenAITokenUsage';
+const containerName = 'OpenAITokenUsageData';
 
 const initStore = async () => {
 	const factory = griddb.StoreFactory.getInstance();
@@ -112,9 +112,9 @@ async function containersInfo(store) {
 /**
  * Insert data to GridDB
  */
-function insert(data, container) {
+async function insert(data, container) {
 	try {
-		container.put(data);
+		await container.put(data);
 		return { status: true };
 	} catch (err) {
 		if (err.constructor.name == 'GSException') {
@@ -124,7 +124,7 @@ function insert(data, container) {
 				console.log(err.getMessage(i));
 			}
 
-			return { status: false, error: err };
+			return { status: false, error: err.toString() };
 		} else {
 			console.log(err);
 			return { status: false, error: err };
