@@ -7,7 +7,7 @@ import router from './routes.js';
 import { __dirname } from './libs/dirname.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 2001;
 const publicPath = path.resolve(`${__dirname}`, '../ui/dist');
 
 app.use(
